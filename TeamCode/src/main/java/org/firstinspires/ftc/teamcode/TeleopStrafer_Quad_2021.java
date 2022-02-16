@@ -169,9 +169,9 @@ public class TeleopStrafer_Quad_2021 extends OpMode {
         // if (gamepad1.left_bumper)
         //     robot.rightHand.setPosition(0.2);
             
-        if (gamepad2.right_bumper)
+        if (gamepad2.right_trigger > 0.5)
             clawOffset+= 0.002;
-        if (gamepad2.left_bumper)
+        if (gamepad2.left_trigger > 0.5)
             clawOffset-= 0.002;
 //        if (gamepad2.right_bumper)
 //            robot.capping.setPosition(0.6);
@@ -204,10 +204,10 @@ public class TeleopStrafer_Quad_2021 extends OpMode {
         slidePos -= gamepad2.left_stick_y * 8;
 
         if(gamepad2.y) {
-            slidePos = 4450;
+            slidePos = 800;
         }
         if(gamepad2.a) {
-            slidePos = 460;
+            slidePos = 200;
         }
         if(gamepad1.y){
             slidePos += 10;
@@ -292,15 +292,17 @@ public class TeleopStrafer_Quad_2021 extends OpMode {
             robot.spinner.setPower(0);
             
         // Claw presets
-        if(gamepad2.right_stick_y < 0 || gamepad1.left_trigger > 0)
+        if(gamepad2.right_stick_y == 1 || gamepad1.left_trigger > 0)
             robot.leftHand.setPosition(0.0);
             //clawOffset = 0.1;
-        if (gamepad2.right_stick_y > 0 || gamepad1.right_trigger > 0)
+        if (gamepad2.right_stick_y == -1 || gamepad1.right_trigger > 0)
             robot.leftHand.setPosition(0.5);
             //clawOffset = -0.3;
         
-        if (gamepad2.right_stick_x < 0 || gamepad1.dpad_left)
+        if (gamepad2.left_bumper || gamepad1.dpad_left)
             robot.leftHand.setPosition(0.1);
+        if (gamepad2.right_bumper)
+            robot.leftHand.setPosition(0.4);
         // Send telemetry message to signify robot running;
         telemetry.addData("slidePos",  slidePos);
         telemetry.addData("clawOffset",  clawOffset);

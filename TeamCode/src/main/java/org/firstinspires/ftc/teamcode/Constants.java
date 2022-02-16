@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 public class Constants {
 
-    private static double[] xDist = new double[] {6, 6, 8}; //zone 1,2, 3
-    private static double[] redXDist = new double[] {8, 4, 6}; //zone 1,2, 3
-    private static double[] armDeg = new double[] {100, 500, 800}; //zone 1,2,3
+    private static double[] xDist = new double[] {5.5, 8, 6}; //zone 1,2, 3
+    private static double[] redXDist = new double[] {10, 8, 6}; //zone 1,2, 3
+    private static double[] armDeg = new double[] {160, 500, 800}; //zone 1,2,3
     public static int[] lowCyanBounds = new int[] {106, 187, 50};
     public static int[] highCyanBounds = new int[] {118,225,255};
     public static int test = 0;

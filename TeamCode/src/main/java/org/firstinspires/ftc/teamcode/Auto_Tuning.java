@@ -9,122 +9,100 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@Autonomous(name="Vision_Auto_Blue_Left", group="Training")
+@Autonomous(name="Auto_Tuning", group="Training")
 //@Disabled
-public class Vision_Auto_Blue_Left extends LinearOpMode {
+public class Auto_Tuning extends LinearOpMode {
 
     /* Declare OpMode members. */
-    MaristBaseRobot2021_Quad robot   = new MaristBaseRobot2021_Quad();   
+    MaristBaseRobot2021_Quad robot   = new MaristBaseRobot2021_Quad();
     private ElapsedTime runtime = new ElapsedTime();
-    
+
     // Variables to control Speed
     double velocity = 0.5; // Default velocity
-    
+
     //Camera fields
     WebcamName webcamName;
     OpenCvCamera camera;
-    
+
     //Pipeline
-    Pipeline_Target_Detect myPipeline;
-    
+    PipeLine_Color_Detect myPipeline;
+
     @Override
     public void runOpMode() {
 
-         /*
+        /*
          * Initialize the drive system variables.
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
-        
+
         //Test of Webcam
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
         camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
-        myPipeline = new Pipeline_Target_Detect();
-        
-       
+        myPipeline = new PipeLine_Color_Detect(Constants.lowCyanBounds, Constants.highCyanBounds);
+
+
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Ready to run");    //
         telemetry.update();
-        
-        // Wait for the game to start (driver presses PLAY)
-        waitForStart();
-        
+
+        //Asychronusly Open Camera (In new Thread)
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
         {
             @Override
-           public void onOpened() {
-               //Start streaming from camera
-               camera.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
-               
+            public void onOpened() {
+                //Start streaming from camera
+                camera.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+
                 //Init Pipeline
                 camera.setPipeline(myPipeline);
-           } 
-           @Override
-           public void onError(int errorCode) {
-               //Called if not working
-           }
+            }
+            @Override
+            public void onError(int errorCode) {
+                //Called if not working
+            }
         });
-        
+
+        // Wait for the game to start (driver presses PLAY)
+        waitForStart();
+
         double xPos = -1;
         int zone = 2;
-        
+
         runtime.reset();
-        while(opModeIsActive() && (runtime.seconds() < 3)) {
+        while(opModeIsActive() && (runtime.seconds() < 2)) {
             xPos = myPipeline.getXPos();
             zone = myPipeline.getZone();
             telemetry.addData("XPos", xPos);
             telemetry.addData("Zone", zone);
             telemetry.update();
         }
-        
-        xPos = myPipeline.getXPos();
-        zone = myPipeline.getZone();
-        double dist = Constants.chooseRedX(zone);
-        double deg = Constants.chooseDeg(zone);
-
 
         // Autonomous Finished
+        telemetry.addData("XPos", xPos);
+        telemetry.addData("Zone", zone);
+        telemetry.addData("For best efficiency, get data close to Zone 2 and Xpos: ", 128);
         telemetry.update();
-        
+
         delay(1);
         //Stop the Camera
+        //camera.stopStreaming();
         camera.closeCameraDevice();
-        
-        delay(0.2);
-        robot.strafeInches(0.7, 22, 5);
-        delay(0.2);
-        robot.moveDistance(-4, 0.5);
-        delay(0.2);
-        robot.turnAngle(190, 0.5);
-        delay(0.2);
-        //arm decision (updated)
-        robot.leftArmMotorDeg(0.5, -deg, 5);
-        delay(0.2);
-        robot.moveDistance(dist, 0.7);
-        //park in the parking spot
-        delay(0.5);
-        robot.leftHand.setPosition(0.4);
-        delay(1.5);
-        robot.moveDistance(-dist-4, 1.0);
-        delay(0.5);
-        robot.leftHand.setPosition(0);
-        delay(0.3);
-        //reset arm
-        robot.leftArmMotorDeg(0.5, deg, 5);
-        delay(0.2);
-        robot.turnAngle(90, 0.5);
-        delay(0.3);
-        robot.strafeInches(0.8, -8, 5);
-        delay(0.3);
-        robot.moveDistance(-35, 0.8);
-        delay(0.3);
-        robot.strafeInches(0.8, 20, 5);
-        
-        // Autonomous Finished
+        //sleep(1000);
+
+        //arm decision
+        // if(zone ==3) {
+        //     robot.leftArmMotorDeg(0.5, 330, 5);
+        // }
+        // else if(zone == 2) {
+        //     robot.leftArmMotorDeg(0.5, 270, 5);
+        // }
+        // else {
+        //     robot.leftArmMotorDeg(0.5, 240, 5);
+        // }
+        // delay(5);
         telemetry.addData("Path", "Complete");
         telemetry.update();
-        //sleep(1000);
-        
     }
 
     // Functions for REACH 2019 based on Python Turtles
@@ -132,24 +110,24 @@ public class Vision_Auto_Blue_Left extends LinearOpMode {
     {
         robot.driveStraightInches(velocity, inches, 10);
     }
-    
+
     public void right(double degrees)
     {
         robot.pointTurnDegrees(velocity, degrees, 10);
     }
-    
+
     public void left(double degrees)
     {
         degrees = degrees * -1;
         robot.pointTurnDegrees(velocity, degrees, 10);
     }
-    
+
     public void speed(int speed)
     {
         double newSpeed = (double)speed / 10.0;
         velocity = newSpeed;
     }
-    
+
     // Sample Delay Code
     public void delay(double t) { // Imitates the Arduino delay function
         runtime.reset();
@@ -159,3 +137,4 @@ public class Vision_Auto_Blue_Left extends LinearOpMode {
         }
     }
 }
+
