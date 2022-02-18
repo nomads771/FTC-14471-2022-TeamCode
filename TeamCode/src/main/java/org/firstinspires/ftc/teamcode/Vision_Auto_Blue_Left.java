@@ -91,32 +91,32 @@ public class Vision_Auto_Blue_Left extends LinearOpMode {
         camera.closeCameraDevice();
         
         delay(0.2);
-        robot.strafeInches(0.7, 22, 5);
-        delay(0.2);
-        robot.moveDistance(-4, 0.5);
-        delay(0.2);
-        robot.turnAngle(190, 0.5);
-        delay(0.2);
-        //arm decision (updated)
+        robot.moveDistance(-5, 0.6);
+        delay(0.3);
+        robot.strafeInches(0.5, 7, 5);
+        delay(0.3);
+        robot.turnAngle(-160, 0.5);
+        delay(0.3);
+        //arm decision
         robot.leftArmMotorDeg(0.5, -deg, 5);
         delay(0.2);
-        robot.moveDistance(dist, 0.7);
+        robot.moveDistance(dist, 0.6);
         //park in the parking spot
         delay(0.5);
         robot.leftHand.setPosition(0.4);
         delay(1.5);
-        robot.moveDistance(-dist-4, 1.0);
+        robot.moveDistance(-10, 1.0);
         delay(0.5);
         robot.leftHand.setPosition(0);
         delay(0.3);
         //reset arm
         robot.leftArmMotorDeg(0.5, deg, 5);
         delay(0.2);
-        robot.turnAngle(90, 0.5);
+        robot.turnAngle(70, 0.5);
         delay(0.3);
         robot.strafeInches(0.8, -8, 5);
         delay(0.3);
-        robot.moveDistance(-35, 0.8);
+        robot.moveDistance(-30, 1.0);
         delay(0.3);
         robot.strafeInches(0.8, 20, 5);
         

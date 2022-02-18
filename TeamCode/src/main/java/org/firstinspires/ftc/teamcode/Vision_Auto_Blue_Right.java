@@ -98,32 +98,40 @@ public class Vision_Auto_Blue_Right extends LinearOpMode {
         delay(0.5);
         robot.leftHand.setPosition(0.4);
         delay(1.5);
-        robot.moveDistance(-dist, 1.0);
+        robot.moveDistance(-dist+3, 1.0);
         delay(0.2);
         robot.leftHand.setPosition(0);
         delay(0.2);
-        robot.turnAngle(-265, 0.5);
-        delay(0.3);
         robot.leftArmMotorDeg(0.5, deg, 5);
         delay(0.2);
+        robot.turnAngle(125, 0.5);
+        delay(0.3);
         //spin thing
-        robot.moveDistance(25, 1.0);
+        robot.moveDistance(29, 1.0); //25 worked best
         delay(0.5);
-        robot.strafeInches(0.5, -10, 5);
+        if(zone ==1 ) {
+            robot.strafeInches(0.5, -3, 5);
+        }
+        else if(zone ==2) {
+            robot.strafeInches(0.5, -7, 5);
+        }
+        else {
+            robot.strafeInches(0.5, -5, 5);
+        }
         delay(0.2);
         robot.spinner.setPower(0.5);
         delay(2.5);
         robot.spinner.setPower(0);
         delay(0.2);
         //park
-        robot.strafeInches(0.5, 9, 5);
+        robot.strafeInches(0.5, 22, 5);
         delay(0.2);
 //        robot.turnAngle(45, 0.5);
 //        delay(0.2);
         robot.moveDistance(6, 0.8);
         delay(0.2);
-        robot.strafeInches(0.5, 11, 5);
-        delay(0.2);
+//        robot.strafeInches(0.5, 14, 5);
+//        delay(0.2);
 
         // Autonomous Finished
         telemetry.addData("Path", "Complete");
