@@ -39,7 +39,8 @@ public class Auto_Tuning extends LinearOpMode {
         //Test of Webcam
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
         camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
-        myPipeline = new PipeLine_Color_Detect(Constants.lowCyanBounds, Constants.highCyanBounds);
+        //myPipeline = new PipeLine_Color_Detect(); //
+        myPipeline = new PipeLine_Color_Detect(Constants.lowBlueBounds, Constants.highBlueBounds);
 
 
         // Send telemetry message to signify robot waiting;

@@ -2,11 +2,15 @@ package org.firstinspires.ftc.teamcode;
 
 public class Constants {
 
+    public enum Zone {
+        ONE, TWO, THREE, NOT_FOUND
+    }
+
     private static double[] xDist = new double[] {9, 6, 6}; //zone 1,2, 3
     private static double[] redXDist = new double[] {10, 8, 6}; //zone 1,2, 3
     private static double[] armDeg = new double[] {160, 500, 800}; //zone 1,2,3
-    public static int[] lowCyanBounds = new int[] {106, 187, 50};
-    public static int[] highCyanBounds = new int[] {118,225,255};
+    public static int[] lowBlueBounds = new int[] {180, 30, 80};
+    public static int[] highBlueBounds = new int[] {190,100,100};
     public static int test = 0;
 
     public static double chooseX(int zone) {
