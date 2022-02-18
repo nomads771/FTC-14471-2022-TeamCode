@@ -28,7 +28,7 @@ public class PipeLine_Color_Detect extends OpenCvPipeline {
             new Point(0, 60), new Point(90, 220)
     );
     private static final Rect MID_RECT = new Rect(
-            new Point(120, 60), new Point(1200, 220)
+            new Point(120, 60), new Point(120, 220)
     );
     private static final Rect RIGHT_RECT = new Rect(
             new Point(280, 60), new Point(320, 220)
